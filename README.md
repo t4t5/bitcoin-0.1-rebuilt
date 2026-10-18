@@ -62,7 +62,3 @@ Everything here is read from the original exe and confirmed by the rebuild match
 ## The original archives
 
 `original/archives/` holds the 0.1.0 release archives from the [Satoshi Nakamoto Institute](https://satoshi.nakamotoinstitute.org/code/). Their MD5 and SHA-1 match the ones SNI publishes, and the build checks them before it starts.
-
-## Licence
-
-The scripts, tools and documentation in this repository are under the MIT licence (`LICENSE`). The Bitcoin release archives in `original/` are under Bitcoin's own MIT licence, Copyright (c) 2009 Satoshi Nakamoto (`license.txt` in each archive). The packages the build downloads keep their own licences.
