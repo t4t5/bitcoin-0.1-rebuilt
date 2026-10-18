@@ -1,0 +1,25 @@
+# Rebuild bitcoin.exe from scratch on a clean runner and check its SHA-256: a
+# second machine (ext4, rootful Docker, a different core count) for the
+# reproduction. The weekly run also catches packages vanishing upstream.
+name: build
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./build.sh
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: logs/
+          if-no-files-found: ignore

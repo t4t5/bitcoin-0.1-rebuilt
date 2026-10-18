@@ -1,0 +1,13 @@
+# Debian as of the day the reproduction was first built, so apt installs the
+# same package versions (notably Wine 8.0~repack-4) whenever the image is built.
+Types: deb
+URIs: http://snapshot.debian.org/archive/debian/20261017T110000Z
+Suites: bookworm bookworm-updates
+Components: main
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb
+URIs: http://snapshot.debian.org/archive/debian-security/20261017T110000Z
+Suites: bookworm-security
+Components: main
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg

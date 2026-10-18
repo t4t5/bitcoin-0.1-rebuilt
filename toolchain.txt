@@ -1,0 +1,38 @@
+# The toolchain and dependencies that rebuild bitcoin.exe 0.1.0 byte for byte.
+# README.md and the comments below give the evidence. Package lines are
+# unpacked into C:\MinGW; key=value lines are settings for build.sh.
+
+# MinGW, as of late 2008. wxWidgets and Berkeley DB are built with this
+# binutils: their code in the original has the old `test reg,reg` encoding and
+# object .text padded to 16.
+gcc-core-3.4.5-20060117-3.tar.gz
+gcc-g++-3.4.5-20060117-3.tar.gz
+binutils-2.17.50-20060824-1.tar.gz
+mingw-runtime-3.13.tar.gz
+w32api-3.10.tar.gz
+mingw32-make-3.81-2.tar.gz
+
+# Unpacked over the toolchain after wxWidgets and Berkeley DB are built, for
+# bitcoin's own objects, the link and strip: bitcoin's objects are padded to 4,
+# and ld packs import thunks 8 bytes apart and sets the section alignment flags.
+upgrade=binutils-2.18.50-20080109-2.tar.gz
+
+# Boost 1.34.1: no extra addressof wrappers (1.36+), and its
+# boost_range_begin/boost_range_end names sort the FOREACH helpers in the
+# original's order (1.35 doesn't)
+boost=boost_1_34_1.tar.bz2
+# For Berkeley DB's configure
+msys=MSYS-1.0.11.exe
+# The installer, not the .tar.gz or .zip: its CRLF wx.manifest is embedded
+# verbatim in the exe's resources
+wx=wxMSW-2.8.9-Setup.exe
+
+# Wall-clock times (seconds since the epoch) of the steps that embed them,
+# read from the original exe.
+# wincmn.cpp's __DATE__ __TIME__: "Nov 28 2008" "08:05:59" (local time; the
+# container's is UTC)
+wincmn_time=1227859559
+# resource directory TimeDateStamps: 2009-01-10 23:08:02 UTC
+windres_time=1231628882
+# PE header TimeDateStamp: 2009-01-10 23:16:00 UTC
+strip_time=1231629360

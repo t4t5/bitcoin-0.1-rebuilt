@@ -1,0 +1,16 @@
+# Every file under downloads/ that the build uses: SHA-256, file name, then one
+# or more URLs, tried in order. scripts/fetch.sh downloads and checks them. Old
+# MinGW packages are on SourceForge's flat mingw/ path, which redirects to their
+# current folder.
+1553d24ab30c1651b570c77499a20b8aeaf652274df3000c784a305415a1214d  binutils-2.17.50-20060824-1.tar.gz  https://downloads.sourceforge.net/mingw/binutils-2.17.50-20060824-1.tar.gz
+2ef07d7e52d40957c9550a20a3da767ec2157edd30b7c78f30ecad9f44853f14  binutils-2.18.50-20080109-2.tar.gz  https://downloads.sourceforge.net/mingw/binutils-2.18.50-20080109-2.tar.gz
+0f866c75b025a4f1340117a106595cc0675f48ba1e5a9b5c221ec7f19e96ec4c  boost_1_34_1.tar.bz2  https://archives.boost.io/release/1.34.1/source/boost_1_34_1.tar.bz2
+f14fd96dd38915a1d63dcb94a63fbb8092334ceba6b5060760427096f631263e  db-4.7.25.tar.gz  https://download.oracle.com/berkeley-db/db-4.7.25.tar.gz
+be73c9428664b891fd45124de5ca78286cae2a6515890838f1347f77d21852ca  gcc-core-3.4.5-20060117-3.tar.gz  https://downloads.sourceforge.net/mingw/gcc-core-3.4.5-20060117-3.tar.gz
+cb1815cea431d4b5d2809743c617253ff5c1578876ef01a476550a082e484f08  gcc-g++-3.4.5-20060117-3.tar.gz  https://downloads.sourceforge.net/mingw/gcc-g++-3.4.5-20060117-3.tar.gz
+6c7db1cfbaca043a43e4cbfd74afc2c5aa7fa7529c6776d82063e8a51e63a56a  mingw32-make-3.81-2.tar.gz  https://downloads.sourceforge.net/mingw/mingw32-make-3.81-2.tar.gz
+0d1813dda2a4a400956eaa767008cb4a177528334b495073431378c5c62d0861  mingw-runtime-3.13.tar.gz  https://downloads.sourceforge.net/mingw/mingw-runtime-3.13.tar.gz
+0d677f27c1935a27b849cfb53f4559c981f510f2f0a5bd0a109391b8332cbb80  MSYS-1.0.11.exe  https://downloads.sourceforge.net/mingw/MSYS-1.0.11.exe
+224e1ca3aeeda8acc72e5c48b34843904b9d585aaadb4d5a15524c25f6c6a1ce  openssl-0.9.8h.tar.gz  https://www.openssl.org/source/old/0.9.x/openssl-0.9.8h.tar.gz
+150e3c3a93d83a463da541d3038b142a33cad06edb13f9b5e7690a52b5776e51  w32api-3.10.tar.gz  https://downloads.sourceforge.net/mingw/w32api-3.10.tar.gz
+c28f0acd3aa9fafa9985fbedbde27ebb1ca36fea485d85061993f62d384e0fec  wxMSW-2.8.9-Setup.exe  https://github.com/wxWidgets/wxWidgets/releases/download/v2.8.9/wxMSW-2.8.9-Setup.exe

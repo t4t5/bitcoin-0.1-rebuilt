@@ -1,0 +1,9 @@
+# The release archives in original/archives/: MD5, SHA-1, SHA-256, file name.
+# They come from the Satoshi Nakamoto Institute
+# (https://satoshi.nakamotoinstitute.org/code/), and the MD5 and SHA-1 are the
+# ones SNI publishes there. For bitcoin-0.1.0.rar they are also the ones Marc
+# Bevand posted in March 2012 for the copy Hal Finney had kept
+# (https://bitcointalk.org/index.php?topic=68121.0). SHA-256 was computed here.
+# build.sh checks bitcoin-0.1.0.tgz against all three before it builds from it.
+91e2dfa2af043eabbb38964cbf368500  ec9ed4ccbc990eceb922ff0c4d71d1ad466990dd  8b17eb9a5707f2519defda4cdf8d14fa1b8dee630e11e6ef85ff9f5547555b56  bitcoin-0.1.0.rar
+dca1095f053a0c2dc90b19c92bd1ec00  35f83eaa334e0e447ceea77a7cc955a4ccdd1a1d  ce9da46516e3042741224a7f9061e3181a5a4d17abba72b6e82922af3753d756  bitcoin-0.1.0.tgz
