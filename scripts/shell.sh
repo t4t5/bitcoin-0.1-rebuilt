@@ -1,6 +1,6 @@
 #!/bin/sh
 # Start the build container. Its C:\MinGW, C:\msys, C:\wxWidgets, C:\DB,
-# C:\OpenSSL, C:\boost and C:\bitcoin live under build/ on the host,
+# C:\OpenSSL, C:\boost, C:\bitcoin and C:\rar live under build/ on the host,
 # so they persist between runs and can be inspected. Those are the paths the
 # original makefile expects ("/wxWidgets" etc. resolve against the C: root).
 # The btc2009-wine image comes from docker/ (build.sh builds it, or
@@ -13,7 +13,7 @@ set -eu
 root=$(cd "$(dirname "$0")/.." && pwd)
 c="$root/build"
 mounts="" dirs=""
-for d in MinGW msys wxWidgets DB OpenSSL boost bitcoin; do
+for d in MinGW msys wxWidgets DB OpenSSL boost bitcoin rar; do
   mkdir -p "$c/$d"
   mounts="$mounts -v $c/$d:/wine/drive_c/$d"
   dirs="$dirs /wine/drive_c/$d"

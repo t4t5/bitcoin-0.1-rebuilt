@@ -17,11 +17,14 @@ RUN gcc -m32 -shared -fPIC -O2 -o /src/fixedtime.so /src/fixedtime.c -ldl
 
 FROM debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
 
+# unar unpacks Rar.exe from the WinRAR installer, a solid RAR that bsdtar can't
+# read and that won't install under a Wine without a display
+# (scripts/build-rar.sh)
 COPY snapshot.sources /etc/apt/sources.list.d/debian.sources
 RUN dpkg --add-architecture i386 \
  && apt-get -o Acquire::Check-Valid-Until=false update \
  && apt-get install -y --no-install-recommends \
-      wine=8.0~repack-4 wine32:i386=8.0~repack-4 make bzip2 xz-utils ca-certificates libarchive-tools innoextract \
+      wine=8.0~repack-4 wine32:i386=8.0~repack-4 make bzip2 xz-utils ca-certificates libarchive-tools innoextract unar \
  && rm -rf /var/lib/apt/lists/*
 
 # Runs as root: under rootless Docker that is the host user, so files written to

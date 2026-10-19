@@ -1,11 +1,13 @@
 #!/bin/sh
 # Rebuild bitcoin.exe 0.1.0 from the source in its release archive and check
-# that it's byte-identical to the released one. See README.md.
+# that it's byte-identical to the released one, then pack it into
+# bitcoin-0.1.0.rar and check that that's identical to the release archive.
+# See README.md.
 # Steps: release archive check, build image, downloads, toolchain, wxWidgets,
-# Boost/OpenSSL, Berkeley DB, binutils upgrade, bitcoin. The build goes to
-# build/ (the exe is build/bitcoin/bitcoin.exe), logs to logs/. Finished
-# dependency builds are reused; delete build/<dir> to redo one. Exits non-zero
-# unless the SHA-256 matches.
+# Boost/OpenSSL, Berkeley DB, binutils upgrade, bitcoin, release archive. The
+# build goes to build/ (the exe is build/bitcoin/bitcoin.exe, the archive
+# build/rar/bitcoin-0.1.0.rar), logs to logs/. Finished dependency builds are
+# reused; delete build/<dir> to redo one. Exits non-zero unless both match.
 # Usage: ./build.sh
 set -eu
 root=$(cd "$(dirname "$0")" && pwd)
@@ -52,16 +54,21 @@ run() {
   return $rc
 }
 
+# Whether file $2 has the MD5, SHA-1 and SHA-256 that original/MANIFEST gives
+# for release archive $1
+matches_release() {
+  read -r want_md5 want_sha1 want_sha256 _ <<EOF
+$(awk -v f="$1" '!/^#/ && $4 == f' "$root/original/MANIFEST")
+EOF
+  [ "$(md5sum < "$2" | cut -d' ' -f1)" = "$want_md5" ] &&
+    [ "$(sha1sum < "$2" | cut -d' ' -f1)" = "$want_sha1" ] &&
+    [ "$(sha256sum < "$2" | cut -d' ' -f1)" = "$want_sha256" ]
+}
+
 # The source comes from the release archive, which must match the published
 # MD5 and SHA-1 and the SHA-256 in original/MANIFEST
 log archive
-tgz="$root/original/archives/bitcoin-0.1.0.tgz"
-read -r md5 sha1 sha256 _ <<EOF
-$(awk '!/^#/ && $4 == "bitcoin-0.1.0.tgz"' "$root/original/MANIFEST")
-EOF
-[ "$(md5sum < "$tgz" | cut -d' ' -f1)" = "$md5" ] &&
-  [ "$(sha1sum < "$tgz" | cut -d' ' -f1)" = "$sha1" ] &&
-  [ "$(sha256sum < "$tgz" | cut -d' ' -f1)" = "$sha256" ] ||
+matches_release bitcoin-0.1.0.tgz "$root/original/archives/bitcoin-0.1.0.tgz" ||
   die "original/archives/bitcoin-0.1.0.tgz doesn't match original/MANIFEST"
 
 log image; docker build -q -t btc2009-wine "$root/docker" > /dev/null
@@ -102,3 +109,12 @@ log bitcoin; run env WINDRES_TIME="$windres_time" STRIP_TIME="$strip_time" sh /w
 got=$(sha256sum "$b/bitcoin/bitcoin.exe" | cut -d' ' -f1)
 [ "$got" = "$expected" ] || die "MISMATCH: build/bitcoin/bitcoin.exe has SHA-256 $got, expected $expected"
 log "MATCH: build/bitcoin/bitcoin.exe has SHA-256 $got"
+
+# Pack the rebuilt exe the way Satoshi did; the result must be the published
+# bitcoin-0.1.0.rar
+log rar; run sh /work/scripts/build-rar.sh > "$root/logs/rar.log"
+rar="$b/rar/bitcoin-0.1.0.rar"
+md5=$(md5sum < "$rar" | cut -d' ' -f1) sha1=$(sha1sum < "$rar" | cut -d' ' -f1)
+matches_release bitcoin-0.1.0.rar "$rar" ||
+  die "MISMATCH: build/rar/bitcoin-0.1.0.rar has MD5 $md5, SHA-1 $sha1; original/MANIFEST has the expected ones"
+log "MATCH: build/rar/bitcoin-0.1.0.rar has MD5 $md5 and SHA-1 $sha1"

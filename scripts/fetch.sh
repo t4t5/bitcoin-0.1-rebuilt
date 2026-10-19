@@ -12,12 +12,13 @@ spec=toolchain.txt
 dl="$root/downloads" manifest="$root/downloads/MANIFEST"
 
 # Package lines, then the packages named by settings, then the ones every
-# build uses (scripts/build-db.sh, scripts/prepare-deps.sh)
+# build uses (scripts/build-db.sh, scripts/prepare-deps.sh, scripts/build-rar.sh)
 files=$(
   sed -e 's/#.*//' -e '/^[[:space:]]*$/d' -e '/=/d' "$root/$spec"
   sed -n 's/^\(boost\|msys\|wx\|upgrade\)=//p' "$root/$spec"
   echo db-4.7.25.tar.gz
   echo openssl-0.9.8h.tar.gz
+  echo wrar351.exe
 )
 
 sha() { sha256sum "$1" | cut -d' ' -f1; }
